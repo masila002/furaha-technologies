@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotspot Setup Requirements | Furaha Technologies Limited</title>
+    <meta name="description"
+        content="Hardware specifications, power needs, bandwidth prerequisites, and M-Pesa billing integration for Mikrotik hotspot setups across Kenya.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0A192F;
+            --primary-light: #112240;
+            --accent: #FF6B00;
+            --accent-hover: #E65A00;
+            --bg-color: #F8FAFC;
+            --text-main: #334155;
+            --text-muted: #64748B;
+            --white: #FFFFFF;
+            --card-border: rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), #FF8E33);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 800;
+            font-size: 20px;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+            border: 2px solid transparent;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Page Banner */
+        .banner {
+            background: linear-gradient(to right, rgba(10, 25, 47, 0.95), rgba(17, 34, 64, 0.92)), url('hero_background.png');
+            background-size: cover;
+            background-position: center;
+            padding: 150px 5% 80px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .banner-content {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: gap 0.3s ease;
+        }
+
+        .back-link:hover {
+            gap: 12px;
+        }
+
+        .banner h1 {
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .banner p {
+            font-size: 1.15rem;
+            color: #CBD5E1;
+            margin-bottom: 30px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1240px;
+            margin: 60px auto 80px;
+            padding: 0 5%;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Requirements Grid */
+        .req-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .req-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 36px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--card-border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .req-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .req-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .req-icon {
+            width: 54px;
+            height: 54px;
+            background: rgba(255, 107, 0, 0.1);
+            color: var(--accent);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .req-card h2 {
+            font-size: 1.35rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .req-list {
+            list-style: none;
+        }
+
+        .req-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 14px;
+            color: var(--text-main);
+            font-size: 0.98rem;
+        }
+
+        .req-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        /* Tier Comparison Table */
+        .specs-section {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 45px 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--card-border);
+            margin-bottom: 60px;
+        }
+
+        .specs-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .specs-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .specs-header p {
+            color: var(--text-muted);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .specs-table th {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .specs-table th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        .specs-table th:last-child {
+            border-top-right-radius: 12px;
+        }
+
+        .specs-table tr:hover td {
+            background: #F8FAFC;
+        }
+
+        .badge {
+            background: transparent;
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 0;
+        }
+
+        /* Call To Action Box */
+        .cta-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 24px;
+            padding: 50px 40px;
+            color: var(--white);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(10, 25, 47, 0.2);
+        }
+
+        .cta-box h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .cta-box p {
+            color: #CBD5E1;
+            max-width: 650px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+
+        .cta-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-light);
+            color: #CBD5E1;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 24px;
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 30px 0;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 868px) {
+            .req-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specs-section {
+                padding: 30px 20px;
+            }
+
+            .cta-box {
+                padding: 36px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">F</div>
+            <div class="logo-text">FURAHA <span>TECHNOLOGIES LIMITED</span></div>
+        </a>
+        <a href="tel:0758570455" class="btn">
+            <svg style="width:20px;height:20px;margin-right:8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                </path>
+            </svg>
+            0758 570 455
+        </a>
+    </header>
+
+    <section class="banner">
+        <div class="banner-content">
+            <a href="index.html" class="back-link">
+                <svg style="width:18px;height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Back to Overview
+            </a>
+            <h1>Hotspot Deployment Prerequisites</h1>
+            <p>Everything required to launch a high-speed commercial Wi-Fi hotspot with automated M-Pesa billing and Mikrotik bandwidth management.</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="req-grid">
+            <!-- 1. Router & Core Hardware -->
+            <div class="req-card">
+                <div class="req-header">
+                    <div class="req-icon">
+                        <svg style="width:28px;height:28px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2">
+                            </path>
+                        </svg>
+                    </div>
+                    <h2>Core Router Hardware</h2>
+                </div>
+                <ul class="req-list">
+                    <li><strong>Mikrotik RouterBoard:</strong> hEX rev3 (small setup), RB3011 / RB4011 (medium/large setup).</li>
+                    <li><strong>Gigabit Switch:</strong> 8-port to 24-port PoE switch for powered AP connectivity.</li>
+                    <li><strong>CAT6 Ethernet Cable:</strong> Pure copper outdoor SFTP cable for signal integrity.</li>
+                    <li><strong>RJ45 Connectors & Boots:</strong> Shielded crimps to prevent static damage.</li>
+                </ul>
+            </div>
+
+            <!-- 2. Wireless Access Points -->
+            <div class="req-card">
+                <div class="req-header">
+                    <div class="req-icon">
+                        <svg style="width:28px;height:28px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0">
+                            </path>
+                        </svg>
+                    </div>
+                    <h2>Access Points (AP)</h2>
+                </div>
+                <ul class="req-list">
+                    <li><strong>Outdoor High-Power APs:</strong> TP-Link EAP225 / EAP610, Ruijie Reyee RAP2260, Tenda i24.</li>
+                    <li><strong>Dual-Band Coverage:</strong> 2.4GHz for wide range + 5GHz for high speed.</li>
+                    <li><strong>PoE Injectors / Adapters:</strong> 24V or 48V Gigabit Passive/802.3af PoE.</li>
+                    <li><strong>Mounting Hardware:</strong> Galvanized steel poles, wall brackets & hose clamps.</li>
+                </ul>
+            </div>
+
+            <!-- 3. Bandwidth & Power -->
+            <div class="req-card">
+                <div class="req-header">
+                    <div class="req-icon">
+                        <svg style="width:28px;height:28px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h2>Bandwidth & Power</h2>
+                </div>
+                <ul class="req-list">
+                    <li><strong>Dedicated WAN Source:</strong> Fiber connection (FTTH/Dedicated) or high-capacity PTP link.</li>
+                    <li><strong>Minimum Speeds:</strong> 30Mbps to 100Mbps+ depending on client capacity.</li>
+                    <li><strong>Power Backup (UPS):</strong> 650VA+ UPS or 12V DC UPS to keep routers alive during outages.</li>
+                    <li><strong>Surge Protection:</strong> Grounded power extensions and lightning arrestors.</li>
+                </ul>
+            </div>
+
+            <!-- 4. Billing & Captive Portal -->
+            <div class="req-card">
+                <div class="req-header">
+                    <div class="req-icon">
+                        <svg style="width:28px;height:28px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h2>Billing & Software</h2>
+                </div>
+                <ul class="req-list">
+                    <li><strong>M-Pesa Integration:</strong> Automated Paybill / Till Number STK push integration.</li>
+                    <li><strong>Radius / Billing Gateway:</strong> Vouchers, hourly/daily/monthly packages & auto-disconnect.</li>
+                    <li><strong>Branded Captive Portal:</strong> Custom login page with venue logo, rates & promo banners.</li>
+                    <li><strong>Speed Control Queues:</strong> Per-user bandwidth limiting (e.g., 3Mbps per user).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Hardware Specs Matrix -->
+        <section class="specs-section">
+            <div class="specs-header">
+                <h2>Recommended Hardware Scale Matrix</h2>
+                <p>Select the setup scale matching your expected daily active users and venue size.</p>
+            </div>
+            <div class="table-responsive">
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th>Scale Tier</th>
+                            <th>Active Users</th>
+                            <th>Recommended Router</th>
+                            <th>Recommended APs</th>
+                            <th>Min Bandwidth</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge">Small / Cafe</span></td>
+                            <td>10 – 35 Users</td>
+                            <td>Mikrotik hEX (RB750Gr3)</td>
+                            <td>1x TP-Link EAP225 Outdoor</td>
+                            <td>20 – 35 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge">Medium / Apartments</span></td>
+                            <td>35 – 100 Users</td>
+                            <td>Mikrotik RB3011 / RB760iGS</td>
+                            <td>2x – 4x Ruijie RAP2260 / EAP610</td>
+                            <td>50 – 100 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge">Large / Commercial</span></td>
+                            <td>100 – 300+ Users</td>
+                            <td>Mikrotik RB4011 / CCR2004</td>
+                            <td>5x+ Dual-band Wi-Fi 6 APs</td>
+                            <td>100 – 300+ Mbps</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- CTA Box -->
+        <div class="cta-box">
+            <h2>Ready to Build Your Hotspot Network?</h2>
+            <p>Our Nakuru-based engineering team conducts site surveys, supplies certified equipment, sets up Mikrotik RADIUS billing, and deploys countrywide across Kenya.</p>
+            <div class="cta-btns">
+                <a href="https://wa.me/254758570455" class="btn">
+                    <svg style="width:20px;height:20px;margin-right:8px;" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.391.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964 1.003-3.588c-.608-1.056-.928-2.274-.928-3.518 0-3.883 3.16-7.042 7.04-7.042 3.882 0 7.04 3.159 7.04 7.042 0 3.882-3.158 7.042-7.04 7.042z">
+                        </path>
+                    </svg>
+                    Book Survey on WhatsApp
+                </a>
+                <a href="tel:0758570455" class="btn btn-outline" style="border-color:var(--white);color:var(--white);">Call 0758 570 455</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">F</div>
+                <div class="logo-text">FURAHA <span>TECHNOLOGIES LIMITED</span></div>
+            </a>
+            <div style="display:flex;gap:30px;flex-wrap:wrap;justify-content:center;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <svg style="width:20px;height:20px;color:var(--accent);" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                        </path>
+                    </svg>
+                    +254 758 570 455 | +254 745 240 544
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <svg style="width:20px;height:20px;color:var(--accent);" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    furahawifi@gmail.com
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <svg style="width:20px;height:20px;color:var(--accent);" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Nakuru, Kenya
+                </div>
+            </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="copyright">
+            © 2026 Furaha Technologies Limited. All rights reserved.
+        </div>
+    </footer>
+</body>
+
+</html>
