@@ -116,6 +116,27 @@
             transform: translateY(-2px);
         }
 
+        /* Header nav links */
+        .nav-link { color: var(--white); text-decoration: none; font-weight: 600; padding: 6px 8px; border-radius:6px; }
+        .nav-link:hover { color: var(--accent); background: rgba(255,255,255,0.03); }
+
+        /* Mobile navigation toggle */
+        .nav-toggle { display:none; background:transparent; border:0; color:var(--white); width:44px; height:44px; align-items:center; justify-content:center; cursor:pointer; }
+        .nav-toggle .hamburger { display:block; width:20px; height:2px; background:var(--white); position:relative; transition:all .25s ease; }
+        .nav-toggle .hamburger::before, .nav-toggle .hamburger::after { content:''; position:absolute; left:0; right:0; height:2px; background:var(--white); transition:all .25s ease; }
+        .nav-toggle .hamburger::before { top:-6px; }
+        .nav-toggle .hamburger::after { top:6px; }
+        .nav-toggle .hamburger.open { background:transparent; }
+        .nav-toggle .hamburger.open::before { transform: rotate(45deg) translate(4px,4px); top:0; }
+        .nav-toggle .hamburger.open::after { transform: rotate(-45deg) translate(4px,-4px); top:0; }
+
+        @media (max-width: 768px) {
+            .nav { display: none; position: absolute; right: 5%; top: 68px; background: var(--primary); padding: 12px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); flex-direction: column; gap: 8px; }
+            .nav.open { display:flex; }
+            .nav-link { padding: 10px 12px; }
+            .nav-toggle { display:flex; }
+        }
+
         /* Page Banner */
         .banner {
             background: linear-gradient(to right, rgba(10, 25, 47, 0.95), rgba(17, 34, 64, 0.92)), url('hero_background.png');
@@ -426,14 +447,14 @@
         <a href="index.html" class="logo">
             <div class="logo-text">FURAHA <span>TECHNOLOGIES LIMITED</span></div>
         </a>
-        <a href="tel:0758570455" class="btn">
-            <svg style="width:20px;height:20px;margin-right:8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
-                </path>
-            </svg>
-            0758 570 455
-        </a>
+        <button class="nav-toggle" aria-expanded="false" aria-label="Open navigation">
+            <span class="hamburger" aria-hidden="true"></span>
+        </button>
+        <nav class="nav" aria-label="Main navigation" style="display:flex;gap:18px;align-items:center;">
+            <a class="nav-link" href="index.html#about">About</a>
+            <a class="nav-link" href="index.html#services">Core Services</a>
+            <a class="nav-link" href="index.html#contact">Contact</a>
+        </nav>
     </header>
 
     <section class="banner">
@@ -593,7 +614,7 @@
         </div>
     </main>
 
-    <footer>
+    <footer id="contact">
         <div class="footer-content">
             <a href="index.html" class="logo">
                 <div class="logo-text">FURAHA <span>TECHNOLOGIES LIMITED</span></div>
@@ -635,6 +656,32 @@
             © 2026 Furaha Technologies Limited. All rights reserved.
         </div>
     </footer>
+    <script>
+        // Mobile nav toggle for hotspot page
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.querySelector('.nav-toggle');
+            const nav = document.querySelector('header .nav');
+            if (!btn || !nav) return;
+            btn.addEventListener('click', (e) => {
+                const isOpen = nav.classList.toggle('open');
+                btn.setAttribute('aria-expanded', isOpen);
+                const h = btn.querySelector('.hamburger');
+                if (h) h.classList.toggle('open');
+            });
+            document.querySelectorAll('header .nav a').forEach(a => a.addEventListener('click', () => {
+                nav.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+                const h = btn.querySelector('.hamburger'); if (h) h.classList.remove('open');
+            }));
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('header')) {
+                    nav.classList.remove('open');
+                    btn.setAttribute('aria-expanded', 'false');
+                    const h = btn.querySelector('.hamburger'); if (h) h.classList.remove('open');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
