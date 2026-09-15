@@ -47,35 +47,60 @@
         /* Header */
         header {
             position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 25, 47, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 1rem 5%;
+            top: 14px;
+            left: 50%;
+            width: calc(100% - 48px);
+            height: 64px;
+            transform: translateX(-50%);
+            background: transparent;
+            border: 0;
+            padding: 0 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: none;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
             text-decoration: none;
         }
 
-        .logo-text {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--white);
-            letter-spacing: 0.5px;
+        .logo-media {
+            display: block;
+            width: 210px;
+            height: 140px;
+            object-fit: contain;
+            object-position: left center;
         }
 
-        .logo-text span {
-            color: var(--accent);
+        header .logo-media {
+            transform: translateY(24px);
+        }
+
+        header > .logo {
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        header.logo-visible > .logo {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        header {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        header.header-hidden {
+            transform: translate(-50%, calc(-100% - 24px));
+            opacity: 0;
+            pointer-events: none;
         }
 
 
@@ -103,6 +128,16 @@
             box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
         }
 
+        .btn-survey {
+            background: #C05F1C;
+            box-shadow: 0 4px 15px rgba(192, 95, 28, 0.24);
+        }
+
+        .btn-survey:hover {
+            background: #A95118;
+            box-shadow: 0 6px 20px rgba(169, 81, 24, 0.3);
+        }
+
         .btn-outline {
             background: transparent;
             border: 2px solid var(--accent);
@@ -119,6 +154,7 @@
         /* Header nav links */
         .nav-link { color: var(--white); text-decoration: none; font-weight: 600; padding: 6px 8px; border-radius:6px; }
         .nav-link:hover { color: var(--accent); background: rgba(255,255,255,0.03); }
+        .nav { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; width: max-content; padding: 8px 14px; background: rgba(10, 25, 47, 0.72); backdrop-filter: blur(18px) saturate(130%); -webkit-backdrop-filter: blur(18px) saturate(130%); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 16px; box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22); }
 
         /* Mobile navigation toggle */
         .nav-toggle { display:none; background:transparent; border:0; color:var(--white); width:44px; height:44px; align-items:center; justify-content:center; cursor:pointer; }
@@ -131,7 +167,11 @@
         .nav-toggle .hamburger.open::after { transform: rotate(-45deg) translate(4px,-4px); top:0; }
 
         @media (max-width: 768px) {
-            .nav { display: none; position: absolute; right: 5%; top: 68px; background: var(--primary); padding: 12px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); flex-direction: column; gap: 8px; }
+            header { top: 0; left: 0; width: 100%; transform: none; border: 0; border-radius: 0; padding: 0 12px; background: transparent; }
+            header.header-hidden { transform: translateY(calc(-100% - 12px)); }
+            header > .logo { position: absolute; left: 12px; transform: none; }
+            .nav-toggle { position: absolute; right: 12px; background: rgba(10, 25, 47, 0.72); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 12px; }
+            .nav { display: none; position: absolute; left: auto; right: 12px; top: 68px; transform: none; width: max-content; max-width: calc(100vw - 24px); background: rgba(10, 25, 47, 0.92); padding: 12px; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); flex-direction: column; gap: 8px; }
             .nav.open { display:flex; }
             .nav-link { padding: 10px 12px; }
             .nav-toggle { display:flex; }
@@ -172,11 +212,18 @@
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFB347 0%, #FF7A18 55%, #FFD166 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            filter: drop-shadow(0 4px 14px rgba(255, 122, 24, 0.28));
         }
 
         .banner p {
             font-size: 1.15rem;
-            color: #CBD5E1;
+            color: #E2F3F5;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
             margin-bottom: 30px;
         }
 
@@ -393,10 +440,6 @@
 
 
 
-            .logo-text {
-                font-size: 15px;
-            }
-
             header .btn {
                 padding: 8px 16px;
                 font-size: 13px;
@@ -423,17 +466,13 @@
 
         @media (max-width: 520px) {
             header {
+                height: 52px;
                 padding: 0.6rem 12px;
             }
 
-            .logo {
-                gap: 8px;
-            }
-
-            .logo-text span {
-                display: inline-block;
-                font-size: 12px;
-                white-space: nowrap;
+            .logo-media {
+                width: 165px;
+                height: 110px;
             }
 
             header .btn {
@@ -446,8 +485,8 @@
 
 <body>
     <header>
-        <a href="index.html" class="logo">
-            <div class="logo-text">FURAHA <span>TECHNOLOGIES LIMITED</span></div>
+        <a href="index.html" class="logo" aria-label="Furaha Technologies Limited home">
+            <img class="logo-media" src="logo-removebg-preview.png" alt="Furaha Technologies Limited logo">
         </a>
         <button class="nav-toggle" aria-expanded="false" aria-label="Open navigation">
             <span class="hamburger" aria-hidden="true"></span>
@@ -598,7 +637,7 @@
             <h2>Ready to Build Your Hotspot Network?</h2>
             <p>Our Nakuru-based engineering team conducts site surveys, supplies certified equipment, sets up Mikrotik RADIUS billing, and deploys countrywide across Kenya.</p>
             <div class="cta-btns">
-                <a href="https://wa.me/254758570455" class="btn">
+                <a href="https://wa.me/254758570455" class="btn btn-survey">
                     <svg style="width:20px;height:20px;margin-right:8px;" fill="currentColor" viewBox="0 0 24 24">
                         <path
                             d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.391.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964 1.003-3.588c-.608-1.056-.928-2.274-.928-3.518 0-3.883 3.16-7.042 7.04-7.042 3.882 0 7.04 3.159 7.04 7.042 0 3.882-3.158 7.042-7.04 7.042z">
@@ -613,8 +652,8 @@
 
     <footer id="contact">
         <div class="footer-content">
-            <a href="index.html" class="logo">
-                <div class="logo-text">FURAHA <span>TECHNOLOGIES LIMITED</span></div>
+            <a href="index.html" class="logo" aria-label="Furaha Technologies Limited home">
+                <img class="logo-media" src="logo-removebg-preview.png" alt="Furaha Technologies Limited logo">
             </a>
             <div style="display:flex;gap:30px;flex-wrap:wrap;justify-content:center;">
                 <div style="display:flex;align-items:center;gap:8px;">
@@ -653,6 +692,23 @@
             © 2026 Furaha Technologies Limited. All rights reserved.
         </div>
     </footer>
+    <script>
+        // Hide the header while scrolling and reveal it from the top edge.
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('header');
+            const banner = document.querySelector('.banner');
+            if (!header || !banner) return;
+            const updateHeader = () => {
+                header.classList.toggle('header-hidden', window.scrollY > 4);
+                header.classList.toggle('logo-visible', window.scrollY < banner.offsetTop + banner.offsetHeight - header.offsetHeight);
+            };
+            window.addEventListener('scroll', updateHeader, { passive: true });
+            document.addEventListener('mousemove', (event) => {
+                if (event.clientY <= 80) header.classList.remove('header-hidden');
+            });
+            updateHeader();
+        });
+    </script>
     <script>
         // Mobile nav toggle for hotspot page
         document.addEventListener('DOMContentLoaded', () => {
