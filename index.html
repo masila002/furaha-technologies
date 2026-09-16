@@ -234,7 +234,7 @@
 
         .hero-slide::after {
             content: '';
-            background: linear-gradient(135deg, rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.5));
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.78), rgba(10, 25, 47, 0.42));
         }
 
         .hero-slide.active {
@@ -265,7 +265,7 @@
             background-clip: text;
             color: transparent;
             display: inline-block;
-            filter: drop-shadow(0 4px 15px rgba(255, 107, 0, 0.35));
+            filter: drop-shadow(0 2px 8px rgba(255, 107, 0, 0.22));
         }
 
         .hero-tag {
@@ -303,17 +303,48 @@
             text-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
         }
 
-        .hero p {
-            font-size: 1.225rem;
-            color: #CBD5E1;
+        .hero-caption {
+            font-size: 1.8rem;
+            color: #F8FAFC;
             line-height: 1.7;
             margin-bottom: 42px;
-            max-width: 650px;
+            max-width: 720px;
             margin-left: auto;
             margin-right: auto;
-            font-weight: 400;
+            font-weight: 500;
             letter-spacing: -0.01em;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            min-height: 3.2em;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            position: relative;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .hero-caption {
+                font-size: 1.15rem;
+                white-space: normal;
+                max-width: 88vw;
+                line-height: 1.6;
+            }
+        }
+
+        .hero-caption::after {
+            content: '';
+            display: inline-block;
+            width: 1.5px;
+            height: 1.05em;
+            background: var(--accent);
+            margin-left: 8px;
+            vertical-align: middle;
+            box-shadow: 0 0 10px rgba(255, 107, 0, 0.7);
+            animation: blink 1.2s steps(1) infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         .hero-btns {
@@ -643,7 +674,7 @@
 <body>
     <header>
         <a href="#" class="logo" aria-label="Furaha Technologies Limited home">
-            <img class="logo-media" src="logo-removebg-preview.png" alt="Furaha Technologies Limited logo">
+            <video class="logo-media" src="logo-vid.webm" autoplay muted loop playsinline aria-label="Furaha Technologies Limited logo"></video>
         </a>
         <button class="nav-toggle" aria-expanded="false" aria-label="Open navigation">
             <span class="hamburger" aria-hidden="true"></span>
@@ -656,16 +687,15 @@
     </header>
     <section class="hero">
         <div class="hero-slideshow" aria-label="Our network deployment work">
-            <div class="hero-slide active" role="img" aria-label="Fiber optic splicing and termination"></div>
-            <div class="hero-slide" role="img" aria-label="Technician pulling fiber cable"></div>
-            <div class="hero-slide" role="img" aria-label="Wireless hotspot mounted on a pole"></div>
-            <div class="hero-slide" role="img" aria-label="Technician working on a network pole"></div>
+            <div class="hero-slide active" data-caption="Precision fiber splicing for reliable, low-loss connectivity." role="img" aria-label="Fiber optic splicing and termination"></div>
+            <div class="hero-slide" data-caption="Structured cable pulling for seamless network rollout and performance." role="img" aria-label="Technician pulling fiber cable"></div>
+            <div class="hero-slide" data-caption="Hotspot installations that deliver fast, dependable internet access." role="img" aria-label="Wireless hotspot mounted on a wall"></div>
+            <div class="hero-slide" data-caption="Pole work and maintenance that keep infrastructure resilient and secure." role="img" aria-label="Technician working on a network pole"></div>
         </div>
         <div class="hero-content">
             <!-- hero tag removed for cleaner appearance -->
             <h1>Next-Generation<br><span class="gradient-text">Fiber & Wireless Setup</span></h1>
-            <p>Professional survey, rollout, FTTH, and hotspot setups across Kenya. Based in Nakuru, deploying
-                cutting-edge connectivity where you need it.</p>
+            <p id="hero-caption" class="hero-caption" aria-live="polite">Precision fiber splicing for reliable, low-loss connectivity.</p>
             <div class="hero-btns">
                 <a href="https://wa.me/254758570455" class="btn btn-survey">
                     <svg style="width:20px;height:20px;margin-right:8px;" fill="currentColor" viewBox="0 0 24 24">
@@ -802,7 +832,7 @@
     <footer id="contact">
         <div class="footer-content">
             <a href="#" class="logo" aria-label="Furaha Technologies Limited home">
-                <img class="logo-media" src="logo-removebg-preview.png" alt="Furaha Technologies Limited logo">
+                <video class="logo-media" src="logo-vid.webm" autoplay muted loop playsinline aria-label="Furaha Technologies Limited logo"></video>
             </a>
             <div style="display:flex;gap:30px;flex-wrap:wrap;justify-content:center;">
                 <div style="display:flex;align-items:center;gap:8px;">
@@ -845,16 +875,38 @@
         // Rotate the hero imagery and allow visitors to select a slide.
         document.addEventListener('DOMContentLoaded', () => {
             const slides = Array.from(document.querySelectorAll('.hero-slide'));
+            const heroCaption = document.getElementById('hero-caption');
             if (!slides.length) return;
             let currentSlide = 0;
-            
+            let typeTimer = null;
+
+            const typeText = (text) => {
+                if (!heroCaption) return;
+                heroCaption.textContent = '';
+                let index = 0;
+
+                clearInterval(typeTimer);
+                typeTimer = setInterval(() => {
+                    if (index < text.length) {
+                        heroCaption.textContent += text[index];
+                        index += 1;
+                    } else {
+                        clearInterval(typeTimer);
+                    }
+                }, 55);
+            };
 
             const showSlide = (index) => {
                 currentSlide = index;
                 slides.forEach((slide, slideIndex) => slide.classList.toggle('active', slideIndex === currentSlide));
+                if (heroCaption) {
+                    const caption = slides[currentSlide].dataset.caption || '';
+                    typeText(caption);
+                }
             };
 
-            setInterval(() => showSlide((currentSlide + 1) % slides.length), 5200);
+            showSlide(0);
+            setInterval(() => showSlide((currentSlide + 1) % slides.length), 7000);
         });
     </script>
     <script>
