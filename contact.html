@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Furaha Technologies | Request a Connectivity Solution</title>
+    <meta name="description" content="Contact Furaha Technologies for fiber, wireless, FTTH, hotspot, and network support services across Kenya.">
+    <link rel="icon" type="image/png" href="logo-removebg-preview.png">
+    <link rel="apple-touch-icon" href="logo-removebg-preview.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A192F;
+            --primary-light: #112240;
+            --accent: #FF6B00;
+            --accent-hover: #E65A00;
+            --surface: #F8FAFC;
+            --text: #334155;
+            --muted: #64748B;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--surface);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .contact-header {
+            min-height: 88px;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--primary);
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .logo-media {
+            width: 175px;
+            height: 100px;
+            object-fit: contain;
+            object-position: left center;
+        }
+
+        .back-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            padding: 10px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 8px;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .contact-hero {
+            padding: 88px 5% 56px;
+            background:
+                linear-gradient(135deg, rgba(10, 25, 47, 0.96), rgba(17, 34, 64, 0.9)),
+                url('hero_background.png') center / cover;
+            color: var(--white);
+        }
+
+        .contact-hero-inner,
+        .contact-layout {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            margin-bottom: 14px;
+            color: #FF9A52;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+
+        .contact-hero h1 {
+            max-width: 700px;
+            margin-bottom: 16px;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            line-height: 1.1;
+            font-weight: 800;
+        }
+
+        .contact-hero p {
+            max-width: 620px;
+            color: #CBD5E1;
+            font-size: 1.08rem;
+        }
+
+        .contact-main {
+            padding: 64px 5% 88px;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+            gap: 48px;
+            align-items: start;
+        }
+
+        .contact-details h2,
+        .form-panel h2 {
+            margin-bottom: 12px;
+            color: var(--primary);
+            font-size: 1.7rem;
+        }
+
+        .contact-details > p {
+            margin-bottom: 28px;
+            color: var(--muted);
+        }
+
+        .detail-list {
+            display: grid;
+            gap: 18px;
+        }
+
+        .detail-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .detail-icon {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            flex: 0 0 42px;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(255, 107, 0, 0.12);
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .detail-item strong {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--primary);
+        }
+
+        .detail-item span,
+        .detail-item a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .detail-item a:hover {
+            color: var(--accent);
+        }
+
+        .form-panel {
+            padding: 34px;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            background: var(--white);
+            box-shadow: 0 16px 38px rgba(10, 25, 47, 0.08);
+        }
+
+        .form-panel > p {
+            margin-bottom: 26px;
+            color: var(--muted);
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        label {
+            display: grid;
+            gap: 7px;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #CBD5E1;
+            border-radius: 7px;
+            background: #FFFFFF;
+            color: var(--text);
+            padding: 13px 14px;
+            font: inherit;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
+        }
+
+        .submit-button {
+            border: 0;
+            border-radius: 7px;
+            background: var(--accent);
+            color: var(--white);
+            padding: 14px 20px;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 800;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .submit-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .form-note {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .contact-footer {
+            padding: 28px 5%;
+            background: var(--primary-light);
+            color: #CBD5E1;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 760px) {
+            .contact-header {
+                min-height: 72px;
+                padding: 0 18px;
+            }
+
+            .logo-media {
+                width: 145px;
+                height: 80px;
+            }
+
+            .back-link {
+                padding: 8px 11px;
+                font-size: 0.82rem;
+            }
+
+            .contact-hero {
+                padding: 64px 6% 46px;
+            }
+
+            .contact-main {
+                padding: 44px 6% 64px;
+            }
+
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 38px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .form-panel {
+                padding: 24px 18px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="contact-header">
+        <a class="logo" href="index.html" aria-label="Furaha Technologies Limited home">
+            <video class="logo-media" autoplay muted loop playsinline preload="auto" aria-label="Furaha Technologies Limited logo">
+                <source src="logo-vid.webm" type="video/webm">
+                <img src="logo-removebg-preview.png" alt="Furaha Technologies Limited logo">
+            </video>
+        </a>
+        <a class="back-link" href="index.html">Back to Home</a>
+    </header>
+
+    <main>
+        <section class="contact-hero">
+            <div class="contact-hero-inner">
+                <p class="eyebrow">Start a conversation</p>
+                <h1>Let us build the right connection for your project.</h1>
+                <p>Tell us what you need and our team will get back to you with the next practical step.</p>
+            </div>
+        </section>
+
+        <section class="contact-main">
+            <div class="contact-layout">
+                <div class="contact-details">
+                    <h2>Contact Furaha Technologies</h2>
+                    <p>Whether you need a site survey, FTTH deployment, hotspot installation, or network support, we are ready to help.</p>
+                    <div class="detail-list">
+                        <div class="detail-item">
+                            <span class="detail-icon">P</span>
+                            <div>
+                                <strong>Call us</strong>
+                                <a href="tel:+254758570455">+254 758 570 455</a><br>
+                                <a href="tel:+254745240544">+254 745 240 544</a>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">@</span>
+                            <div>
+                                <strong>Email</strong>
+                                <a href="mailto:furahawifi@gmail.com">furahawifi@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">K</span>
+                            <div>
+                                <strong>Based in</strong>
+                                <span>Nakuru, Kenya</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-panel">
+                    <h2>Request a quote or survey</h2>
+                    <p>Share a few details and continue the conversation on WhatsApp.</p>
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-row">
+                            <label>
+                                Your name
+                                <input name="name" type="text" autocomplete="name" required>
+                            </label>
+                            <label>
+                                Phone number
+                                <input name="phone" type="tel" autocomplete="tel" required>
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <label>
+                                Email address
+                                <input name="email" type="email" autocomplete="email">
+                            </label>
+                            <label>
+                                Service needed
+                                <select name="service" required>
+                                    <option value="" selected disabled>Select a service</option>
+                                    <option>Survey & Design</option>
+                                    <option>Network Rollout</option>
+                                    <option>FTTH Deployment</option>
+                                    <option>Hotspot Solutions</option>
+                                    <option>Wireless PTP</option>
+                                    <option>Maintenance</option>
+                                </select>
+                            </label>
+                        </div>
+                        <label>
+                            Project location
+                            <input name="location" type="text" autocomplete="address-level2" required>
+                        </label>
+                        <label>
+                            Project details
+                            <textarea name="message" placeholder="Tell us briefly about your requirements" required></textarea>
+                        </label>
+                        <button class="submit-button" type="submit">Send via WhatsApp</button>
+                        <p class="form-note">Your message will open in WhatsApp before it is sent.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="contact-footer">
+        © 2026 Furaha Technologies Limited. All rights reserved.
+    </footer>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const message = [
+                'Hello Furaha Technologies, I would like to make an enquiry.',
+                `Name: ${formData.get('name')}`,
+                `Phone: ${formData.get('phone')}`,
+                `Email: ${formData.get('email') || 'Not provided'}`,
+                `Service: ${formData.get('service')}`,
+                `Location: ${formData.get('location')}`,
+                `Details: ${formData.get('message')}`
+            ].join('\n');
+            window.open(`https://wa.me/254758570455?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+        });
+    </script>
+</body>
+
+</html>
